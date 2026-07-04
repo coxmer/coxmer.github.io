@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>毕业书信</title>
+    <head>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        .back{
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgb(233, 174, 65),rgb(238, 203, 127));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .search-card{
+            width: 100%;
+            max-width: 420px;
+            padding: 40px 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px;
+            text-align: center;
+            background: linear-gradient(135deg, rgb(240, 188, 92), rgb(241, 215, 159));
+        }
+        .search-card h2{
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 22px;
+        }
+        #inputText{
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+            transition: 0.3s;
+        }
+        #inputText:focus{
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+        #Bin{
+            width: 100%;
+            margin-top: 16px;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background-color: #667eea;
+            color: #fff;
+            font-size: 17px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        #Bin:active{
+            background: #5468d3;
+        }
+        .tip{
+            margin-top: 20px;
+            color: rgb(250, 79, 79);
+        }
+    </style>
+    </head>
+    <body>
+        <div class="back">
+        <div class="search-card">
+            <h2>毕业书信</h2>
+            <input type="text" id="inputText" placeholder="请输入你的姓名和学号，如:0101小明">
+            <button id="Bin">阅读</button>
+            <div class="tip" id="msg"></div>
+        </div>
+        </div>
+        <script>
+            const pageMap = {
+                "1232黄雪莹": "1232.html"
+            };
+            const input = document.getElementById('inputText');
+            const btn = document.getElementById('Bin');
+            const msg = document.getElementById('msg');
+
+            function jumpPage(){
+                const val = input.value.trim();
+                msg.innerText = "";
+                if (pageMap[val]){
+                    window.location.href = pageMap[val];
+                }else{
+                    msg.innerText = "输入有误，请重试";
+                }
+            }
+            btn.addEventListener('click', jumpPage);
+            input.addEventListener('keydown',function(e){if (e.key === 'Enter') jumpPage();})
+        </script>
+    </body>
+</html>
