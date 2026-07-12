@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>致伍轩乐的毕业信</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="1205.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            font-family: 'Courier New', Courier, monospace;
+            background: linear-gradient(135deg, #baccd9,#f0c9c1);
+            color: #5a3a6e;
+            overflow: hidden;
+            line-height: 1.6;
+            height: 100vh;
+            position: relative;
+        }
+
+        #scroll-container{
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+            position: relative;
+        }
+
+        .page{
+            height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card{
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            transform: translateX(0);
+            opacity: 1;
+            transition: transform 0.8s ease, opacity 0.8s ease;
+        }
+
+        .page:not(.active) .card{
+            transform: translateY(50px);
+            opacity: 0;
+        }
+
+        h1, h2{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin-bottom: 25px;
+            color: #d14b9d;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1{
+            font-size: 3.5rem;
+            margin-bottom: 28px;
+        }
+
+        h2{
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+
+        p{
+            font-size: 2rem;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .heart{
+            color: #ff6b9d;
+            margin: 0 5px;
+            animation: beat 1.2s infinite;
+            display: inline-block;
+        }
+
+        .image-grid{
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .image-item{
+            width: 200px;
+            height: 200px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .image-item img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .image-item:hover img{
+            transform: scale(1.1);
+        }
+
+        .image-item::after{
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(209,75,157,0.2), rgba(255,107,157,0.2));
+            border-radius: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-item:hover::after{
+            opacity: 1;
+        }
+
+        .decoration{
+            position: absolute;
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        .heart-decoration{
+            color: #ff9ec0;
+            font-size: 4rem;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .signature{
+            text-align: right;
+            font-size: 2.2rem;
+            margin-top: 30px;
+            color: #d14b9d;
+            font-style: italic;
+        }
+
+        .scroll-hint{
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateY(-50%);
+            font-size: 2.5rem;
+            color: #d14b9d;
+            animation: bounce 2s infinite;
+            z-index: 10;
+        }
+
+        .page-indicators{
+            position: fixed;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .indicator{
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active{
+            background: white;
+            transform: scale(1.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+        
+        .subtitle{
+            font-size: 1.2rem;
+            color: grey;
+            text-align: center;
+        }
+
+        .buttons-container{
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .btn{
+            width: 200px;
+            height: 80px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.24);
+            box-sizing: 0 10px 20px rgba(0,0,0,0.4);
+        }
+
+        .btn:hover{
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.4);
+        }
+
+        .btn-1{
+            background: rgba(179, 173, 173, 0.315);
+        }
+
+        .btn-2{
+            background: linear-gradient(135deg, #ffd6e7,#ffefc1);
+        }
+
+        .btn-3{background: rgba(255, 255, 255, 0.8); border: 2px solid #baccd9;}
+
+        .btn i{
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+        
+        #page1 {
+            background: linear-gradient(135deg, #ffd6e7, #c1e3ff);
+        }
+
+        #page2{
+            background: linear-gradient(135deg, #c1e3ff, #ffefc1);
+        }
+
+        #page3{
+            background: linear-gradient(135deg, #ffefc1, #d0f0c0);
+        }
+
+        #page4{
+            background: linear-gradient(135deg, #d0f0c0, #ffd6e7);
+        }
+        
+        /*子页面默认完全隐藏，仅添加active时显示 */
+        .sub-page{
+            height: 100vh;
+            scroll-snap-align: start;
+            display: none; /* 初始隐藏 */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        /* 子页面激活时显示 */
+        .sub-page.active{
+            display: flex;
+        }
+
+        .card2{
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            transform: translateX(0);
+            opacity: 1;
+            transition: transform 0.8s ease, opacity 0.8s ease;
+        }
+
+        .card2 P{line-height: 1.6; color: #5a3a6e;}
+
+        .sub-p{
+            font-size: 2rem;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .sub-heart{
+            color: #ff6b9d;
+            margin: 0 5px;
+            animation: beat 1.2s infinite;
+            display: inline-block;
+        }
+
+        .sub-signature{
+            text-align: right;
+            font-size: 2.2rem;
+            margin-top: 30px;
+            color: #d14b9d;
+            font-style: italic;
+        }
+
+        .sub-scroll-hint{
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateY(-50%);
+            font-size: 2.5rem;
+            color: #d14b9d;
+            animation: bounce 2s infinite;
+            z-index: 10;
+        }
+
+        .sub-page-indicators{
+            position: fixed;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .sub-indicator{
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sub-indicator.active{
+            background: white;
+            transform: scale(1.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+        
+        #page-6{
+            background: linear-gradient(135deg, rgb(244,155,118), rgb(140,194,106));
+        }
+
+        #page-7{
+            background: linear-gradient(135deg ,rgb(43,116,176), rgb(32,137,77));
+        }
+        #page-8{
+            background: linear-gradient(135deg, #ffd6e7, #c1e3ff);
+        }
+        
+        @keyframes beat {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.3); }
+        100% { transform: scale(1); }
+        }
+    
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+    
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-30px) translateX(-50%); }
+            60% { transform: translateY(-15px) translateX(-50%); }
+        }
+    
+        .special-text {
+            background: linear-gradient(135deg, #d14b9d, #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+    
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            h2 { font-size: 2.2rem; }
+            p { font-size: 1.5rem; }
+            .card { padding: 25px; }
+            .image-item { width: 150px; height: 150px; }
+            .page-indicators { right: 15px; }
+            .content{grid-template-columns: 1fr;}
+            .buttons-container{flex-direction: column; gap: 20px;}
+            .btn{width: 160px; height: 64px; font-size: 1.1rem;}
+            .btn i{font-size: 3rem;}
+        }
+    
+        @media (max-width: 480px) {
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            p { font-size: 1.3rem; }
+            .image-grid { gap: 10px; }
+            .image-item { width: 120px; height: 120px; }
+            .page { padding: 10px; }
+            .card { padding: 20px; }
+            .page-indicators { right: 10px; }
+            .scroll-hint { font-size: 2rem; }
+        }
+    
+        @media (max-height: 600px) {
+            .card { padding: 20px; }
+            h1 { font-size: 2.5rem; margin-bottom: 15px; }
+            h2 { font-size: 2rem; margin-bottom: 15px; }
+            p { font-size: 1.4rem; margin-bottom: 15px; }
+            .image-item { width: 120px; height: 120px; }
+        }
+    
+        .touch-optimized {
+            scroll-snap-type: y proximity;
+        }
+    </style>
+</head>
+<body>
+    <div id="scroll-container">
+        <div class="page active" id="page1">
+        
+            <div class="card">
+                <h1>致伍轩乐 </h1>
+                <p>窗外蝉鸣正响，三年春秋被我们用书页翻过，我想用这一封特殊的信相赠</p>
+                <div class="image-grid">
+                    <div class="image-item">
+                        <img src="13400861569504852.jpg" alt="演出1">
+                    </div>
+                </div>
+                <p>现在，让我们开始吧！</p>
+            </div>
+            <div class="scroll-hint">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+
+        <div class="page" id="page2">
+            <div class="card">
+                <h2>展信安：</h2>
+                <p>三年前，我们踏入校园，互不相识，大家都有种青涩的懵懂。</p>
+                <div class="image-grid">
+                    <div class="image-item">
+                        <img src="13400861569504852.jpg" alt="演出2">
+                    </div>
+                    <div class="image-item">
+                        <img src="微信图片_2025-08-28_213315_451.jpg" alt="活动1">
+                    </div>
+                </div>
+                <p>那时，大家都在开心的笑着玩着哭闹着，直到我成为学生会干部我们的联系才多了起来。</p>
+            </div>
+            <div class="scroll-hint">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+
+        <div class="page" id="page3">
+            <div class="card">
+                <p>初二那年，令我印象最深的是那年的五四晚会：我们乐队在一起认真排练。</p>
+                <div class="image-grid">
+                    <div class="image-item">
+                        <img src="微信图片_20250716205757_9.jpg" alt="">
+                    </div>
+                    <div class="image-item">
+                        <img src="微信图片_20250719145519_10.jpg" alt="">
+                    </div>
+                </div>
+                <p>在舞台灯光大的照耀下，我们完成了表演，收获了友谊……</p>
+            </div>
+            <div class="scroll-hint"><i class="fas fa-chevron-down"></i></div>
+        </div>
+
+        <div class="page" id="page4">
+            <div class="card">
+                <p>到了初三，我不知如何形容这段友谊，我们既有合作交流又有相互竞争。</p>
+                <p>每节下课，我都能看见你在讨论问题，亦或在偶尔的“发癫”……</p>
+                <p>我写了几份同学录，里面都有一栏叫“你眼中的我”，在我眼中，你活泼可爱，开朗大方，才华横溢，闭月羞花，勇于担责。</p>
+                <p>未来三年我们还会在同一个校园学习，还有可能再次登上舞台演出……</p>
+                <p>此致，祝君顺遂！</p>
+                <div class="signature">
+                    <p>黄昊君书</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="page page5">
+            <div class="end-box">
+                <h1 class="big-cursive" id="cursiveText">少年自有凌云骨，此去当酬济世心</h1>
+            </div>
+        </section>
+    <div class="page-indicators">
+        <div class="indicator active"></div>
+        <div class="indicator"></div>
+        <div class="indicator"></div>
+        <div class="indicator"></div>
+        <div class="indicator"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollContainer = document.getElementById('scroll-container');
+            const pages = document.querySelectorAll('.page'); // 仅包含主页面page1-page5
+            const indicators = document.querySelectorAll('.indicator');
+            const scrollHints = document.querySelectorAll('.scroll-hint');
+
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints;
+            if (isTouchDevice){
+                scrollContainer.classList.add('touch-optimized');
+            }
+
+            pages[0].classList.add('active');
+
+            scrollContainer.addEventListener('scroll', function(){
+                const scrollPosition = scrollContainer.scrollTop;
+                const windowHeight = window.innerHeight;
+
+                pages.forEach((page, index) => {
+                    const pageTop = page.offsetTop;
+                    const isActive = scrollPosition >= pageTop - windowHeight/2 && 
+                                      scrollPosition < pageTop + page.offsetHeight - windowHeight/2;
+                    
+                    if (isActive) {
+                        page.classList.add('active');
+                        document.querySelectorAll('.indicator').forEach(ind => ind.classList.remove('active'));
+                        if (document.querySelectorAll('.indicator')[index]) {
+                            document.querySelectorAll('.indicator')[index].classList.add('active');
+                        }
+                    } else {
+                        page.classList.remove('active');
+                    }
+                });
+            });
+
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', function(){
+                    scrollToPage(index);
+                });
+            });
+
+            scrollHints.forEach((hint, index) => {
+                hint.addEventListener('click', function() {
+                    if (index < pages.length - 1) {
+                        scrollToPage(index + 1);
+                    } else {
+                       scrollToPage(0);
+                    }
+                }); 
+            }); 
+
+            function scrollToPage(pageIndex) {
+                const page = pages[pageIndex];
+                scrollContainer.scrollTo({
+                    top: page.offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+            addDecorations();
+
+            document.addEventListener('keydown', function(e){
+                if (e.key === 'ArrowDown'){
+                    const currentPage =Math.floor(scrollContainer.scrollTop / window.innerHeight);
+                    if (currentPage < pages.length - 1){
+                        scrollToPage(currentPage + 1);
+                    }
+                    e.preventDefault();
+                }else if (e.key === 'ArrowUp'){
+                    const currentPage = Math.floor(scrollContainer.scrollTop / window.innerHeight);
+                    if (currentPage > 0){
+                        scrollToPage(currentPage - 1);
+                    }
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+    <! --Amireux,您-- >
+</body>
+</html>

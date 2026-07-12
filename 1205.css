@@ -1,0 +1,25 @@
+.page5 {
+    background: radial-gradient(circle at 20% 30%, #fff7e6, transparent 45%),
+                radial-gradient(circle at 80% 70%, #ffebe0, transparent 45%),
+                radial-gradient(circle at 50% 20%, #fcf0e3, transparent 50%);
+}
+.end-box {
+    text-align: center;
+}
+.big-cursive {
+    font-family: "STXingkai", "华文行楷", cursive;
+    font-size: clamp(32px, 7vw, 68px);
+    color: #523c2e;
+    letter-spacing: 6px;
+    margin-bottom: 40px;
+}
+.big-cursive span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateX(-20px);
+}
+.sign-kai {
+    font-family: "STKaiti", "华文楷体", serif;
+    font-size: 22px;
+    color: #664c3b;
+}
