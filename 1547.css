@@ -193,6 +193,9 @@ html, body {
 .glass-card {
     width: 80vw;
     max-width: 1400px;
+    height: 90dvh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     padding: 40px;
     backdrop-filter: blur(12px);
     background: rgba(255,255,255,0.25);
